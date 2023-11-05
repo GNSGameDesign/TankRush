@@ -99,8 +99,28 @@ public class Tank : Entity
         InternalRotation += rotationDelta;
         Vector2 heading = Vector2.Transform(Vector2.UnitY, Matrix.CreateRotationZ(InternalRotation));
         Vector2 movement = heading * forwardPower * TankSpeed * (float)time.ElapsedGameTime.TotalSeconds;
-        Location += movement;
-        Rotation = InternalRotation;
+
+        if (Location.X < 0)
+        {
+            Location = new Vector2(0, Location.Y);
+        }
+        else if (Location.X > Game1._graphics.PreferredBackBufferWidth)
+        {
+            Location = new Vector2(Game1._graphics.PreferredBackBufferWidth, Location.Y);
+        }
+        else if (Location.Y > Game1._graphics.PreferredBackBufferHeight)
+        {
+            Location = new Vector2(Location.X, Game1._graphics.PreferredBackBufferHeight);
+        }
+        else if (Location.Y < 0)
+        {
+            Location = new Vector2(Location.X, 0);
+        }
+        else
+        {
+            Location += movement;
+            Rotation = InternalRotation;
+        }
 
         #endregion
     }

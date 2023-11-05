@@ -19,7 +19,7 @@ public class SpriteDefinitions
 
 public class TextureAtlas
 {
-    Dictionary<string, Rectangle> _spriteRectangles;
+    readonly Dictionary<string, Rectangle> _spriteRectangles;
 
     public TextureAtlas(ContentManager content, string assetName, SpriteDefinitions spriteDefinitions)
     {

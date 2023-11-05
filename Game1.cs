@@ -2,7 +2,7 @@
 
 public class Game1 : Game
 {
-    readonly GraphicsDeviceManager _graphics;
+    public static GraphicsDeviceManager _graphics;
     SpriteBatch _spriteBatch;
     readonly List<IDumbEntity> _entities;
 
@@ -45,14 +45,8 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Tank playerTank = new Tank(Content.Load<Texture2D>("Asset_MC"));
         playerTank.InitializeLocation(_graphics);
-        TextEntity textEntity = new TextEntity(
-            "TankRush",
-            Content.Load<SpriteFont>("Pixeled"),
-            new Vector2(8, 0),
-            SharedConstants.MainPurpleTheme
-        );
+        _entities.Add(new TitleSprite(Content));
         _entities.Add(playerTank);
-        _entities.Add(textEntity);
     }
 
     #endregion
@@ -63,9 +57,14 @@ public class Game1 : Game
     {
         foreach (IDumbEntity rawEntity in _entities)
         {
-            if (rawEntity is Entity r)
+            switch (rawEntity)
             {
-                r.UpdateLogic(gameTime);
+                case Entity r:
+                    r.UpdateLogic(gameTime);
+                    break;
+                case ISmartEntity r2:
+                    r2.UpdateLogic(gameTime);
+                    break;
             }
         }
 
@@ -79,13 +78,12 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.DarkGray);
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         foreach (IDumbEntity rawEntity in _entities)
         {
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             rawEntity.Render(_spriteBatch);
+            _spriteBatch.End();
         }
-
-        _spriteBatch.End();
         base.Draw(gameTime);
     }
 

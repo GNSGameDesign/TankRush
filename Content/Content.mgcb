@@ -25,7 +25,7 @@
 /processorParam:TextureFormat=Color
 /build:../AssetsRaw/Asset_MC.png;Asset_MC.png
 
-#begin ../AssetsRaw/MainTitleAtlas.png
+#begin ../AssetsRaw/MainTitle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,7 +35,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../AssetsRaw/MainTitleAtlas.png;MainTitleAtlas.png
+/build:../AssetsRaw/MainTitle.png;MainTitle.png
 
 #begin Pixeled.spritefont
 /importer:FontDescriptionImporter
