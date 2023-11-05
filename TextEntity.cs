@@ -18,7 +18,7 @@ public class TextEntity : IDumbEntity
         Location = location;
         Color = color;
     }
-    
+
     public void Render(SpriteBatch batch)
     {
         batch.DrawString(

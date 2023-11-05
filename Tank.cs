@@ -18,10 +18,9 @@ public class Tank : Entity
     /// How fast the tank should spin/turn
     /// </summary>
     const float RotationSpeed = MathHelper.PiOver2;
-    
+
     const float AccelerationRate = 0.5f; // Adjust the acceleration rate
     const float DecelerationRate = 0.2f; // Adjust the deceleration rate
-
 
     #endregion
 

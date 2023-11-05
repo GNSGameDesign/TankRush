@@ -11,7 +11,7 @@ public class TitleSprite : IDumbEntity
     {
         _texture = content.Load<Texture2D>("");
     }
-    
+
     public void Render(SpriteBatch batch)
     {
         throw new System.NotImplementedException();

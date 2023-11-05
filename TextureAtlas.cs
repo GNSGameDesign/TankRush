@@ -10,7 +10,7 @@ public class SpriteDefinition
 public class SpriteDefinitions
 {
     public Dictionary<string, SpriteDefinition> Sprites { get; } = new();
-    
+
     public void AddSprite(string name, Rectangle sourceRectangle)
     {
         Sprites.Add(name, new SpriteDefinition { SourceRectangle = sourceRectangle });
@@ -20,7 +20,7 @@ public class SpriteDefinitions
 public class TextureAtlas
 {
     Dictionary<string, Rectangle> _spriteRectangles;
-    
+
     public TextureAtlas(ContentManager content, string assetName, SpriteDefinitions spriteDefinitions)
     {
         Texture = content.Load<Texture2D>(assetName);

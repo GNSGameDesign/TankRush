@@ -1,4 +1,3 @@
-
 namespace GameDesign_MonoGameSample1;
 
 public static class SharedConstants
