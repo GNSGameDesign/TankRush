@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameDesign_MonoGameSample1;
@@ -5,7 +6,7 @@ namespace GameDesign_MonoGameSample1;
 /// <summary>
 /// This is a nvery naive implementation of a tank.
 /// </summary>
-public class Tank : Entity
+public class Tank : ISmartEntity
 {
     #region Tank_Constants
 
@@ -29,23 +30,69 @@ public class Tank : Entity
     float _leftTrackPower;
     float _rightTrackPower;
 
+    /// <summary>
+    /// Ask yourself: "Where is it?"
+    /// </summary>
+    Vector2 Location { get; set; }
+
+    /// <summary>
+    /// Ask yourself: "Where is it looking at?"
+    /// </summary>
+    float InternalRotation
+    {
+        get;
+        set;
+    } = MathHelper.PiOver2;
+
+    float Rotation
+    {
+        get => InternalRotation;
+        set
+        {
+            InternalRotation = value;
+            if (InternalRotation < 0)
+                InternalRotation += MathHelper.TwoPi;
+            if (InternalRotation >= MathHelper.TwoPi)
+                InternalRotation -= MathHelper.TwoPi;
+        }
+    }
+
+    float Scale { get; }
+
+    readonly Texture2D _texture;
+
     #endregion
 
     #region Constructor
 
-    public Tank(Texture2D texture) : base(texture)
+    public Tank(ContentManager content)
     {
+        _texture = content.Load<Texture2D>("Tonk");
+        Location = Vector2.Zero;
+        Rotation = MathHelper.PiOver2;
+        Scale = 3f;
     }
 
     #endregion
 
-    public override void UpdateLogic(GameTime time)
+    public void Render(SpriteBatch batch)
+    {
+        Graphics2D.DrawSprite(
+            batch: batch,
+            location: Location,
+            rotation: Rotation,
+            texture: _texture,
+            scale: Scale,
+            sourceRect: null
+        );
+    }
+
+    public void UpdateLogic(GameTime time)
     {
         #region Logic_Init
 
         KeyboardState keyboardState = Keyboard.GetState();
         float forwardPower = 0;
-        float rotationDelta = 0;
 
         #endregion
 
@@ -95,7 +142,8 @@ public class Tank : Entity
 
         #region Calculations
 
-        rotationDelta = (_rightTrackPower - _leftTrackPower) * RotationSpeed * (float)time.ElapsedGameTime.TotalSeconds;
+        float rotationDelta = (_rightTrackPower - _leftTrackPower) * RotationSpeed *
+                              (float)time.ElapsedGameTime.TotalSeconds;
         InternalRotation += rotationDelta;
         Vector2 heading = Vector2.Transform(Vector2.UnitY, Matrix.CreateRotationZ(InternalRotation));
         Vector2 movement = heading * forwardPower * TankSpeed * (float)time.ElapsedGameTime.TotalSeconds;
@@ -104,13 +152,13 @@ public class Tank : Entity
         {
             Location = new Vector2(0, Location.Y);
         }
-        else if (Location.X > Game1._graphics.PreferredBackBufferWidth)
+        else if (Location.X > Game1.Graphics.PreferredBackBufferWidth)
         {
-            Location = new Vector2(Game1._graphics.PreferredBackBufferWidth, Location.Y);
+            Location = new Vector2(Game1.Graphics.PreferredBackBufferWidth, Location.Y);
         }
-        else if (Location.Y > Game1._graphics.PreferredBackBufferHeight)
+        else if (Location.Y > Game1.Graphics.PreferredBackBufferHeight)
         {
-            Location = new Vector2(Location.X, Game1._graphics.PreferredBackBufferHeight);
+            Location = new Vector2(Location.X, Game1.Graphics.PreferredBackBufferHeight);
         }
         else if (Location.Y < 0)
         {

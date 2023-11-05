@@ -2,7 +2,7 @@
 
 public class Game1 : Game
 {
-    public static GraphicsDeviceManager _graphics;
+    internal static GraphicsDeviceManager Graphics;
     SpriteBatch _spriteBatch;
     readonly List<IDumbEntity> _entities;
 
@@ -10,30 +10,19 @@ public class Game1 : Game
 
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        Graphics = new GraphicsDeviceManager(this);
         Window.Title = "TankRush";
         Window.AllowAltF4 = true;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        _graphics.GraphicsProfile = GraphicsProfile.HiDef;
-        _graphics.PreparingDeviceSettings += (_, args) =>
+        Graphics.GraphicsProfile = GraphicsProfile.HiDef;
+        Graphics.PreparingDeviceSettings += (_, args) =>
         {
-            _graphics.PreferMultiSampling = true;
+            Graphics.PreferMultiSampling = true;
             args.GraphicsDeviceInformation.PresentationParameters.MultiSampleCount = 8;
         };
-        _graphics.ApplyChanges();
+        Graphics.ApplyChanges();
         _entities = new List<IDumbEntity>();
-    }
-
-    #endregion
-
-    #region Intialize_Logic
-
-    protected override void Initialize()
-    {
-        GraphicsDevice.PresentationParameters.MultiSampleCount = 4;
-        _graphics.ApplyChanges();
-        base.Initialize();
     }
 
     #endregion
@@ -43,10 +32,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Tank playerTank = new Tank(Content.Load<Texture2D>("Asset_MC"));
-        playerTank.InitializeLocation(_graphics);
         _entities.Add(new TitleSprite(Content));
-        _entities.Add(playerTank);
+        _entities.Add(new Tank(Content));
     }
 
     #endregion
@@ -57,14 +44,9 @@ public class Game1 : Game
     {
         foreach (IDumbEntity rawEntity in _entities)
         {
-            switch (rawEntity)
+            if (rawEntity is ISmartEntity r)
             {
-                case Entity r:
-                    r.UpdateLogic(gameTime);
-                    break;
-                case ISmartEntity r2:
-                    r2.UpdateLogic(gameTime);
-                    break;
+                r.UpdateLogic(gameTime);
             }
         }
 
@@ -78,12 +60,13 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.DarkGray);
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         foreach (IDumbEntity rawEntity in _entities)
         {
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             rawEntity.Render(_spriteBatch);
-            _spriteBatch.End();
         }
+
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 
