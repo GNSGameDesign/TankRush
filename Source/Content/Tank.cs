@@ -59,7 +59,7 @@ public class Tank : ISmartEntity
 
     float Scale { get; }
 
-    readonly Texture2D _texture;
+    readonly Texture2D _baseTexture;
 
     #endregion
 
@@ -67,7 +67,7 @@ public class Tank : ISmartEntity
 
     public Tank(ContentManager content)
     {
-        _texture = content.Load<Texture2D>("Tonk");
+        _baseTexture = content.Load<Texture2D>("Tonk");
         Location = Vector2.Zero;
         Rotation = MathHelper.PiOver2;
         Scale = 3f;
@@ -81,7 +81,7 @@ public class Tank : ISmartEntity
             batch: batch,
             location: Location,
             rotation: Rotation,
-            texture: _texture,
+            texture: _baseTexture,
             scale: Scale,
             sourceRect: null
         );
