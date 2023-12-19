@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDesign-MonoGameSample1", "GameDesign-MonoGameSample1.csproj", "{91FD921F-8048-4B3E-B515-51557AA8F4B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TankRush", "TankRush.csproj", "{91FD921F-8048-4B3E-B515-51557AA8F4B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

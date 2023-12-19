@@ -1,4 +1,4 @@
-namespace GameDesign_MonoGameSample1;
+namespace TankRush;
 
 /// <summary>
 /// This isn't really a smart entity. It just needs UpdateLogic to update the animation over time.

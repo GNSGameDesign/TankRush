@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDesign_MonoGameSample1;
+namespace TankRush;
 
 #region Generic_Entities
 

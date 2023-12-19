@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Content;
 
-namespace GameDesign_MonoGameSample1;
+namespace TankRush;
 
 public class TitleSprite : ISmartEntity
 {

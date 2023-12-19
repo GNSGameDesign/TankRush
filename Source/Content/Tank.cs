@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameDesign_MonoGameSample1;
+namespace TankRush;
 
 /// <summary>
 /// This is a nvery naive implementation of a tank.

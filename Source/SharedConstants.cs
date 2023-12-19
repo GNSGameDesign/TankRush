@@ -1,4 +1,4 @@
-namespace GameDesign_MonoGameSample1;
+namespace TankRush;
 
 public static class SharedConstants
 {
